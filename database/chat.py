@@ -7,7 +7,6 @@ from sqlalchemy import (Column, DateTime, ForeignKey,
                         CheckConstraint
                         )
 import uuid
-# from sqlalchemy.dialects.sqlite import Uuid
 from configs.config import DB_SCHEMA
 import datetime
 
