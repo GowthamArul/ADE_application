@@ -13,6 +13,7 @@ from configs.config import DB_SCHEMA
 from database.base import engine
 from sqlalchemy.schema import CreateSchema
 from prometheus_client import Counter, Histogram, generate_latest
+from routes import fetch_article
 
 from scripts import *
 from database.chat import Base
@@ -110,6 +111,7 @@ async def get_status():
     return JSONResponse({"status": "Status OK"})
 
 # Include the routers
+app.include_router(fetch_article.router, prefix='/article')
 
 
 
