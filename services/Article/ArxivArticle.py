@@ -2,6 +2,7 @@ import logging
 import requests
 from .article_model import ArxivArticle
 import xml.etree.ElementTree as ET
+import re
 
 class ArxivArticleScrape:
     def __init__(self, API_KEY=None):
@@ -28,6 +29,8 @@ class ArxivArticleScrape:
                     'authors': ', '.join([author.find(f'{extract_tag}name').text for author in entry.findall(f'{extract_tag}author')]),
                     'summary': (entry.find(f'{extract_tag}summary').text).replace("\n", " "),
                     'link': entry.find(f'{extract_tag}link').attrib['href'],
+                    'publication_date': re.sub(r'[A-Za-z]', ' ', entry.find(f'{extract_tag}published').text),
+                    'updated_date': re.sub(r'[A-Za-z]', ' ', entry.find(f'{extract_tag}updated').text)
                 })
                 print( entry.find(f'{extract_tag}title').text)
             
