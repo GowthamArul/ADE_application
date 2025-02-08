@@ -20,3 +20,5 @@ class ArxivArticleResponse(BaseModel):
     authors: str
     summary: str
     link: str
+    publication_date: str
+    updated_date: str
