@@ -22,3 +22,5 @@ class ArxivArticleResponse(BaseModel):
     link: str
     publication_date: str
     updated_date: str
+
+    model_config = ConfigDict(from_attributes=True)
