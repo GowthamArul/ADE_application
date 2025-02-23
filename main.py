@@ -101,7 +101,7 @@ async def root():
     """
     Welcome message on the application startup
     """
-    return {"Welcome to the PDM applciation"}
+    return {"Welcome to the AE&I applciation"}
 
 @app.get("/get_status")
 async def get_status():
