@@ -92,8 +92,10 @@ class ArxivArticleScrape:
 
     def scrape(self, payload:ArxivArticleRequest):
         try:
-            articles = self._search_arxiv(payload.search_query
-                                    )
+            articles = self._search_arxiv(payload.search_query, 
+                                          payload.max_results, 
+                                          payload.start
+                                        )
             articles_dict = self._parse_article_xml(articles)
             print(articles_dict)
             return ArxivFetchResponse(articles=articles_dict, count=len(articles_dict))
