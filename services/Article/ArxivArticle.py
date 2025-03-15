@@ -44,6 +44,7 @@ class ArxivArticleScrape:
             
             for entry in xml_string.findall('atom:entry', ns):
                 # Store the values in a dictionary
+                article_id = entry.find('atom:id', ns).text.strip().split("/")[-1]
                 title = (entry.find('atom:title', ns).text).replace("\n", "").strip()
                 authors = (', '.join([author.find('atom:name', ns).text for author in entry.findall('atom:author', ns)])).replace("\n", "").strip()
                 summary = (entry.find('atom:summary', ns).text).replace("\n", "").strip()
@@ -57,6 +58,7 @@ class ArxivArticleScrape:
                 cat = [i for i in categories if i not in primary_category]
                 # Store the values in a dictionary
                 article_info = {
+                    'id': article_id,
                     'title': title,
                     'authors': authors,
                     'summary': summary,

@@ -16,14 +16,15 @@ class ArxivArticleRequest(BaseModel):
     }
 
 class ArxivArticle(BaseModel):
+    id: str
     title: str
     authors: str
     summary: str
-    link: str
-    publication_date: str
-    updated_date: str
     primary_category: str
     secondary_categories: str | None
+    publication_date: str
+    updated_date: str
+    link: str
 
     model_config = ConfigDict(from_attributes=True)
 

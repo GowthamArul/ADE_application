@@ -75,6 +75,7 @@ class FileModel(Base):
     upload_ts: Mapped[datetime.datetime] = mapped_column(server_default=func.now())
     user_id: Mapped[str] = mapped_column(index=True)
     hash: Mapped[str] = mapped_column(index=True)
+    documents: Mapped["DocumentModel"] = relationship(back_populates="file")
 
 
 class DocumentModel(Base):
@@ -91,7 +92,7 @@ class DocumentModel(Base):
     user_id: Mapped[str | None] = mapped_column(index=True)
 
     arxiv_details: Mapped[Optional["ArxivDetailModel"]] = relationship(
-        back_populates="docuemtns",
+        back_populates="documents",
         cascade="all, delete-orphan",
         lazy="joined"
     )
@@ -103,7 +104,7 @@ class DocumentModel(Base):
         back_populates="documents",
         lazy="selectin"
     )
-    file: Mapped[FileModel | None] = relationship(back_populates="document")
+    file: Mapped[FileModel | None] = relationship(back_populates="documents")
     # user_source_docs: Mapped["UserSourceModel"] = relationship(
     #     back_populates="document"
     # )
@@ -149,6 +150,7 @@ class ArxivDetailModel(Base):
     updated_date: Mapped[str]
     link: Mapped[str]
     authors: Mapped[str]
+    documents: Mapped["DocumentModel"] = relationship(back_populates="arxiv_details")
 
     def copy(self):
         return ArxivDetailModel(
