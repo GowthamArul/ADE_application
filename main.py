@@ -75,7 +75,7 @@ async def track_metrics(request:Request, call_next):
         REQUEST_COUNTER.labels(method=method, endpoint=endpoint, status_code=status_code).inc()
 
         logging.info(f"Completed Request: {request.method} {request.url}")
-        logging.error(f"Status: {response.status_code} Duration: {duration_ms} ms")
+        logging.info(f"Status: {response.status_code} Duration: {duration_ms} ms")
         return response
     except Exception:
         logging.error(f"Error Processing Request: {request.method} {request.url}")

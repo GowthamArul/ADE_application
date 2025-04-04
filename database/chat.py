@@ -8,6 +8,7 @@ from sqlalchemy import (Column, DateTime, ForeignKey,
                         )
 from typing import Optional
 import uuid
+from sqlalchemy.types import Uuid as PG_UUID
 from configs.config import DB_SCHEMA
 import datetime
 import os
@@ -46,7 +47,7 @@ class CollectionModel(Base):
     __tablename__ = 'collections'
 
     collection_id: Mapped[uuid.UUID] = mapped_column(
-        Text, primary_key=True, default= lambda: str(uuid.uuid4)
+        PG_UUID(as_uuid=True), primary_key=True, default= uuid.uuid4
     )
     creation_ts: Mapped[datetime.datetime] = mapped_column(server_default=func.now())
     edit_ts: Mapped[datetime.datetime] = mapped_column(server_default=func.now(), onupdate=func.now())
@@ -69,7 +70,7 @@ class FileModel(Base):
     __tablename__ = "files"
 
     file_id: Mapped[uuid.UUID] = mapped_column(
-        Text, primary_key=True, default= lambda: str(uuid.uuid4)
+        PG_UUID(as_uuid=True), primary_key=True, default= uuid.uuid4
     )
     file_name: Mapped[str] = mapped_column(index=True)
     upload_ts: Mapped[datetime.datetime] = mapped_column(server_default=func.now())
@@ -82,7 +83,7 @@ class DocumentModel(Base):
     __tablename__ = "documents"
 
     document_id: Mapped[uuid.UUID] = mapped_column(
-        Text, primary_key=True, default= lambda: str(uuid.uuid4)
+        PG_UUID(as_uuid=True), primary_key=True, default= uuid.uuid4
     )
     document_name: Mapped[str] = mapped_column(index=True)
     creation_ts: Mapped[datetime.datetime] = mapped_column(server_default=func.now())
@@ -140,7 +141,7 @@ class ArxivDetailModel(Base):
     __tablename__ = "arxiv_detail"
 
     arxiv_id : Mapped[uuid.UUID] = mapped_column(
-        Text, primary_key=True, default= lambda: str(uuid.uuid4)
+        PG_UUID(as_uuid=True), primary_key=True, default= uuid.uuid4
     )
     document_id: Mapped[uuid.UUID] = mapped_column(
         ForeignKey(DocumentModel.document_id, ondelete="CASCADE"),

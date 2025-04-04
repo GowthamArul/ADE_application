@@ -1,0 +1,29 @@
+[project]
+name = "ade-backend"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Your Name",email = "you@example.com"}
+]
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi (==0.115.7)",
+    "uvicorn (==0.34.0)",
+    "dotenv (>=0.9.9,<0.10.0)",
+    "sqlalchemy (==2.0.37)",
+    "aiosqlite (==0.20.0)",
+    "prometheus-client (==0.21.1)",
+    "requests (>=2.32.3,<3.0.0)",
+    "greenlet (>=3.1.1,<4.0.0)",
+    "orjson (>=3.10.16,<4.0.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.5"
+

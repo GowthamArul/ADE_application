@@ -13,8 +13,8 @@ router = APIRouter()
 
 @router.post("",
              tags=["documents"],
-             summary="Create Doucment")
-            #  response_model=CreateDocumentResponse)
+             summary="Create Doucment",
+             response_model=CreateDocumentResponse)
 async def create_documents_api(
     request:CreateDocumentRequest,
     db: AsyncSession = Depends(get_db)
