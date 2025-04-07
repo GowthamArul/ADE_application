@@ -13,7 +13,7 @@ from services.Documents.model_request import (CreateDocumentRequest,
 
 async def create_documents(request:CreateDocumentRequest, db:AsyncSession):
     requested_documents_dict = {doc.document_name:doc for doc in request.documents}
-    existing_documents = (await db.execute(
+    existing_documents = (await db.scalars(
         select(DocumentModel.document_name)
         .where(DocumentModel.document_name.in_(requested_documents_dict.keys()))
         .where(
@@ -23,9 +23,9 @@ async def create_documents(request:CreateDocumentRequest, db:AsyncSession):
                 DocumentModel.user_id == "",
             )
         ).distinct()
-    ))
+    )).all()
     
-    existing_doc_ids = {doc[0] for doc in existing_documents}
+    existing_doc_ids = set([str(x) for x in existing_documents])
     new_documents = set(requested_documents_dict.keys()) - existing_doc_ids
 
     new_document_models : list[DocumentModel] =[]

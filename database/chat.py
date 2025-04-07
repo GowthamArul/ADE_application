@@ -43,6 +43,8 @@ collection_document_map = Table("collection_document_map",
                                 )
 
 
+
+
 class CollectionModel(Base):
     __tablename__ = 'collections'
 
@@ -62,9 +64,9 @@ class CollectionModel(Base):
         lazy="selectin",
         order_by="DocumentModel.title"
     )
-    # chat_session: Mapped[list["ChatSessionModel"]] = relationship(
-    #     back_populates="collection", cascade="all, delete-orphan", lazy="selectin"
-    # )
+    chat_session: Mapped[list["ChatSessionModel"]] = relationship(
+        back_populates="collection", cascade="all, delete-orphan", lazy="selectin"
+    )
 
 class FileModel(Base):
     __tablename__ = "files"
@@ -164,3 +166,18 @@ class ArxivDetailModel(Base):
 
         )
 
+class ChatSessionModel(Base):
+    __tablename__ = "chat_sessions"
+    chat_session_id: Mapped[uuid.UUID] = mapped_column(
+        PG_UUID(as_uuid=True), primary_key=True, default= uuid.uuid4
+    )
+    user_id: Mapped[str] = mapped_column(index=True)
+    collection_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey(CollectionModel.collection_id, ondelete="CASCADE"),
+    )
+    session_name: Mapped[str] = mapped_column(default="", index=True)
+    start_ts: Mapped[datetime.datetime] = mapped_column(server_default=func.now())
+    last_message_ts: Mapped[datetime.datetime] = mapped_column(server_default=func.now(), onupdate=func.now())
+    status: Mapped[str] = mapped_column(default="ACTIVE", index=True)
+    module_name: Mapped[str] = mapped_column(index=True)
+    collection: Mapped[CollectionModel] = relationship(back_populates="chat_session")
